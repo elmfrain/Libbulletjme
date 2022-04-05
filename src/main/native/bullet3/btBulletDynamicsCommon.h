@@ -30,6 +30,7 @@ subject to the following restrictions:
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
 #include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
 #include "BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h"
+#include "BulletDynamics/ConstraintSolver/bt6DofStrutConstraint.h"
 #include "BulletDynamics/ConstraintSolver/btUniversalConstraint.h"
 #include "BulletDynamics/ConstraintSolver/btHinge2Constraint.h"
 #include "BulletDynamics/ConstraintSolver/btGearConstraint.h"
