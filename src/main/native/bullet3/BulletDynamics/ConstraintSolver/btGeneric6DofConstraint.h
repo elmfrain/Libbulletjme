@@ -298,6 +298,8 @@ protected:
 	btVector3 m_calculatedAxisAngleDiff;
 	btVector3 m_calculatedAxis[3];
 	btVector3 m_calculatedLinearDiff;
+	btVector3 m_prevCalculatedLinearDiff; // used to determine the rate at which a spring compresses/decompresses
+	btVector3 m_prevCalculatedAxisAngleDiff; // used to determine the rate at which a spring compresses/decompresses
 	btScalar m_factA;
 	btScalar m_factB;
 	bool m_hasStaticBody;

@@ -105,15 +105,21 @@ void bt6DofStrutConstraint::internalUpdateSprings(btConstraintInfo2* info)
 		if (m_springEnabled[i])
 		{
             btScalar velFactor = info->fps / btScalar(info->m_numIterations);
-			// get current position of constraint
+			// get current and previous position of constraint
 			btScalar currPos = m_calculatedLinearDiff[i];
+            btScalar prevPos = m_prevCalculatedLinearDiff[i];
 			// calculate difference
 			btScalar delta = currPos - m_equilibriumPoint[i];
 			// spring force is (delta * m_springRate) according to Hooke's Law
-			btScalar force = delta * m_springRate[i];
-
-			m_linearLimits.m_targetVelocity[i] = velFactor * force;
-			m_linearLimits.m_maxMotorForce[i] = btFabs(force);
+			btScalar springForce = delta * m_springRate[i];
+            // calculate realtime velocity
+            btScalar velocity = (currPos - prevPos) * velFactor;
+            // damping force is (velocity * m_dampingForce)
+            btScalar damping = 0 < velocity ? m_compressionDamping[i] : m_reboundDamping[i];
+            btScalar dampingForce = velocity * damping;
+            btScalar netForce = springForce + dampingForce;
+			m_linearLimits.m_targetVelocity[i] = velFactor * netForce;
+			m_linearLimits.m_maxMotorForce[i] = btFabs(netForce);
 		}
 	}
 	for (i = 0; i < 3; i++)

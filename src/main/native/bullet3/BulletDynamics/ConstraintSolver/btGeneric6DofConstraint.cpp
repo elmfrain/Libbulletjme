@@ -305,6 +305,7 @@ btScalar btTranslationalLimitMotor::solveLinearAxis(
 
 void btGeneric6DofConstraint::calculateAngleInfo()
 {
+	m_prevCalculatedAxisAngleDiff = m_calculatedAxisAngleDiff;
 	btMatrix3x3 relative_frame = m_calculatedTransformA.getBasis().inverse() * m_calculatedTransformB.getBasis();
 	matrixToEulerXYZ(relative_frame, m_calculatedAxisAngleDiff);
 	// in euler angle mode we do not actually constrain the angular velocity
@@ -678,6 +679,7 @@ void btGeneric6DofConstraint::calcAnchorPos(void)
 
 void btGeneric6DofConstraint::calculateLinearInfo()
 {
+	m_prevCalculatedLinearDiff = m_calculatedLinearDiff;
 	m_calculatedLinearDiff = m_calculatedTransformB.getOrigin() - m_calculatedTransformA.getOrigin();
 	m_calculatedLinearDiff = m_calculatedTransformA.getBasis().inverse() * m_calculatedLinearDiff;
 	for (int i = 0; i < 3; i++)
